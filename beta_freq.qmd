@@ -1,37 +1,6 @@
 ---
 title: "The Frequentist Way:  A Tutorial For Using Beta Regression in Pychological Research"
 shorttitle: "Beta Regression Tutorial"
-author:
-  - name: Jason Geller
-    corresponding: true
-    orcid: 0000-0002-7459-4505
-    email: drjasongeller@gmail.com
-    affiliations:
-      - name: Boston College
-        department: Department of Psychology and Neuroscience
-        address: McGuinn 300
-        city: Chestnut Hill
-        region: MA
-        country: USA
-        postal-code: 02467
-  - name: Robert Kubinec
-    affiliations:
-      - name: University of South Carolina
-  - name: Matti Vuorre
-    affiliations:
-      - name: Tilburg University
-author-note:
-  status-changes: 
-    affiliation-change: ~
-    deceased: ~
-  disclosures:
-    study-registration: ~
-    data-sharing: ~
-    related-report: ~
-    conflict-of-interest: ~
-    financial-support: ~
-    gratitude: ~
-    authorship-agreements: ~
 abstract: "Rates, percentages, and proportional data are widespread in psychology and social sciences. These data are usually analyzed with methods falling under the general linear model, which are not ideal for this type of data. A better alternative is the beta regession model which is based on the beta distribution. A beta regression can be used to model continuous outcomes that are non-normal,non-linear, heteroscedastic, and bounded between an upper and lower interval, such as proportions and percentiles. Thus, the beta regression model is well-suited to examine outcomes in psycholgical research expressed as proportions, percentages, or ratios. The overall purpose of this tutorial is to give researchers a hands-on demonstration of how to use beta regression using a real example from the psychological literature. First, we introduce the beta distribution and the beta regression model highlighting crucial components and assumptions. Second, we highlight how to conduct a beta regression in R  using an example dataset from the learning and memory literature. Some extensions of the beta model are then discussed (e.g., zero-inflated, zero- one-inflated, and ordered beta). We present accompanying R code throughout. All code to reproduce this paper can be found on Github: link forthcoming "
 keywords: [beta regression, tutorial, psychology, learning and memory]
 floatsintext: true
@@ -54,13 +23,20 @@ language:
   title-block-author-note: "Author Note"
   title-block-correspondence-note: "Correspondence concerning this article should be addressed to"
   title-block-role-introduction: "Author roles were classified using the Contributor Role Taxonomy (CRediT; https://credit.niso.org/) as follows:"
-bibliography: bibliography.bib
+bibliography: references.bib
 format:
-    apaquarto-typst: default
-      # Can be jou (journal), man (manuscript), stu (student), or doc (document)
-execute: 
+    html: default
+execute:
   warning: false
   message: false
+
+filters:
+  - panelize
+  - webr
+
+knitr:
+  opts_chunk:
+    dev: "ragg_png"
 ---
 
 ::: callout-note
@@ -83,55 +59,45 @@ In @wilford2020 (Expt 1a), they presented participants with two short videos hig
 
 As a first step, we will load the necessary packages along with the data we will be using. While we load all the necessary packages here, we also highlight when packages are needed as code chunks are run.
 
+# Packages Meeded
+::: to-webr
 ```{r}
-#| label: setup
-#| echo: true
-#| message: false
-#| warning: false
+#| label: setup 
+#| echo: true 
+#| #| message: false 
+#| #| warning: false
 
-# packages needed
-library(tidyverse) # tidy functions/data wrangling/viz
-library(glmmTMB) # zero inflated beta
+library(tidyverse) # tidy functions/data wrangling/viz 
+library(glmmTMB) # zero inflated beta l
+library(betareg) 
 library(easystats)
-library(gghalves)
-library(scales) # percentage
-library(tinytable) # tables
+library(easystats) 
+library(gghalves) 
+library(scales) # percentage 
+library(tinytable) # tables l
 library(marginaleffects) # marginal effects
-
 options(scipen = 999) # get rid of scienitifc notation
 ```
+:::
 
-We will read in the data from GitHub
+We will read in the data from GitHub:
 
+::: to-webr
 ```{r}
 
-fluency_data <- read_csv("https://raw.githubusercontent.com/jgeller112/beta_regression_tutorial/refs/heads/main/manuscript/data/fluency_data.csv")
-
+fluency_data <- read_csv(
+  "https://raw.githubusercontent.com/jgeller112/beta_regression_tutorial/refs/heads/main/manuscript/data/fluency_data.csv"
+)
 ```
+:::
 
 ## Beta regression approach
 
-Using a traditional approach, we observed instructor fluency impacts actual learning. Keep in mind the traditional approach assumes normality of residuals and homoscadacity or constant variance. These assumptions are tricky to maintain when the continuous response approaches either the upper or lower boundary of the scale. Does the model `ols_model_new` meet those assumptions? Using `easystats` [@easystats] and the `check_model` function, we can easily assess this. In @fig-ols-assump , we see there definetly some issues with our model. Specifically, there appears to be violations of normality and constant variance (heteroscadacity).
-
-```{r}
-#| label: fig-ols-assump
-#| fig-width: 8
-#| fig-height: 12
-#| fig-cap: "Assumption checks for OLS model"
-#| echo: false
-
-theme_set(theme_classic(base_size = 12))
-
-check_model(ols_model, check = c("homogeneity", "normality"))
-```
+Using a traditional approach, we observed instructor fluency impacts actual learning. Keep in mind the traditional approach assumes normality of residuals and homoscadacity or constant variance. These assumptions are tricky to maintain when the continuous response approaches either the upper or lower boundary of the scale. 
 
 One solution would be to run a beta regression model. Below we fit a beta regression using the `glmmTMB`package [@glmmTMB-4]. This a popular package for running maximum likelihood (MLE) beta regressions with and without varying intercepts/random effects. Other packages that can be used to run beta regression include `betareg` [@betareg] and also `gamlss` [@gamlss]. In `glmmTMB` we fit a beta regression by using a formula similar to the ols model we fit above. However, we must specify the `family` argument as `beta_family(link = "logit")` to fit a vanilla beta regression.
 
-```{r}
-#| echo: true
-# load glmmTMB package
-library(glmmTMB)
-```
+::: to-webr
 
 ```{r}
 #| echo: true
@@ -144,8 +110,11 @@ beta_model <- glmmTMB(
   family = beta_family(link = "logit")
 ) # fits a constant for mu and dispersion
 ```
+:::
 
 When you run the above model, an error will appear: `Error in eval(family$initialize) : y values must be 0 < y < 1`. Do not worry! This is by design. If your remember, the beta distribution can only model responses in the interval \[0-1\], but not responses that are exactly 0 or 1. We need make sure there are no zeros and ones in our dataset.
+
+::: to-webr
 
 ```{r}
 #| label: tbl-01s
@@ -153,12 +122,14 @@ When you run the above model, an error will appear: `Error in eval(family$initia
 #| echo: false
 
 fluency_data |>
-  filter(Accuracy == 0 | Accuracy == 1) |># get onlys 0s and 1s
-  count(Accuracy) |># count them
+  filter(Accuracy == 0 | Accuracy == 1) |> # get onlys 0s and 1s
+  count(Accuracy) |> # count them
   tt()
 ```
-
+:::
 @tbl-01s shows we have 9 rows with accuracy of 0, and 1 row with an accuracy of exactly 1. To run a beta regression we will remove these values.
+
+:::
 
 ```{r}
 #| echo: true
@@ -166,10 +137,12 @@ fluency_data |>
 
 #remove 0s and 1s
 data_beta <- fluency_data |>
-  filter(Accuracy!=0, Accuracy!=1)
+  filter(Accuracy != 0, Accuracy != 1)
 ```
+:::
 
 Let's fit the model again with our little .01 and .99 hack. The model object `data_beta` has our accuracy values modified.
+::: to-webr
 
 ```{r}
 #| echo: true
@@ -182,6 +155,8 @@ beta_model <- glmmTMB(
   family = beta_family(link = "logit")
 ) # fits a constant for mu and dispersion
 ```
+:::
+
 
 No errors this time!
 
@@ -190,6 +165,8 @@ No errors this time!
 @tbl-beta-cond provides a summary of the output for our Beta regression model. The $\mu$ parameter estimates, which have the conditional tag in the `Component` column while $\phi$ parameter coefficients are tagged as dispersion in the `Component` column).
 
 #### $\mu$ component
+
+::: to-webr
 
 ```{r}
 #| label: tbl-beta-cond
@@ -203,19 +180,25 @@ beta_model_results <- model_parameters(beta_model)
 
 beta_model_results |>
   as.data.frame() |>
-  mutate(p = ifelse(p < .001, "<.001", round(p, 3)))|>
+  mutate(p = ifelse(p < .001, "<.001", round(p, 3))) |>
   tt(digits = 2)
 ```
+::: to-webr
+
 
 @tbl-beta-cond displays the summary of the Beta regression model. The first set of coefficients (first two rows in the table) represent how factors influence the $\mu$ parameter, which is the mean of the beta distribution. These coefficients are interpreted on the scale of the logit, meaning they represent linear changes on a nonlinear space. The intercept term `(Intercept)` represents the log odds of the mean on accuracy for the disfluent instructor condition. Here being in the disfluent condition translates to a log odds of `r round(beta_model_results$Coefficient[1], 3)`. The fluency coefficient `FluencyFluent` represents the difference between the fluency and disfluency conditions. That is, watching a fluent instructor does not lead to higher recall than watching a disfluent instructor, b = `r round(beta_model_results$Coefficient[2], 3)` , SE = `r round(beta_model_results$SE[2], 3)` , 95% CIs = \[`r round(beta_model_results$CI_low[2], 3)`,`r round(beta_model_results$CI_high[2], 3)`\], p = `r round(beta_model_results$p[2], 3)`.
 
 ##### Predicted probabilities
+::: to-webr
 
 ```{r}
 #| echo: true
 # load marginaleffects package
 library(marginaleffects)
 ```
+:::
+
+::: to-webr
 
 ```{r}
 #| label: tbl-predict-prob
@@ -224,28 +207,35 @@ library(marginaleffects)
 #| echo: false
 
 # get the predicted probablities for each level of fluency
-avg_predictions(beta_model, variables="Fluency", dpar="mu") |>
+avg_predictions(beta_model, variables = "Fluency", dpar = "mu") |>
   tt(digits = 3) |>
   format_tt(j = "p", fn = scales::label_pvalue()) |>
   format_tt(escape = TRUE)
 ```
+:::
+
 
 @tbl-beta-cond displays the predicted probabilities for each condition. Both values in the estimate column are negative, which indicates that probability is below 50%. Looking at the predicted probabilities confirms this. For the `Fluency` factor, we can interpret the estimate column in terms of proportions or percentages. That is, participants who watched the fluent instructor scored on average 35% on the final exam compared to 30% for those who watched the disfluent instructor.
 
 We can also easily visualize these from `marginaleffects` using the `plot_predictions` function. To visualize the `mu` parameter set the `what` argument as `mu`.
 
+::: to-webr
+
 ```{r}
 #| label: plot-beta
 #| echo: true
-beta_plot <- plot_predictions(beta_model, condition = "Fluency", vcov=TRUE)
+beta_plot <- plot_predictions(beta_model, condition = "Fluency", vcov = TRUE)
 ```
+:::
+
+::: to-webr
 
 ```{r}
 #| label: fig-plot-pre
 #| echo: false
 #| fig-cap: Predicted probablities for fluency factor
 
-beta_plot + 
+beta_plot +
   theme_lucid(base_size = 14) +
   scale_x_discrete(
     breaks = c("0", "1"),
@@ -253,6 +243,8 @@ beta_plot +
   ) +
   scale_y_continuous(labels = label_percent())
 ```
+:::
+
 
 ##### Marginal effects
 
@@ -263,7 +255,7 @@ beta_plot +
 #| tbl-cap-location: top
 
 # get risk difference by default
-beta_avg_comp <- avg_comparisons(beta_model, variables = "Fluency", dpar="mu")
+beta_avg_comp <- avg_comparisons(beta_model, variables = "Fluency", dpar = "mu")
 ```
 
 ```{r}
@@ -285,6 +277,8 @@ The other component we need to pay attention to is the dispersion or precision p
 
 Understanding the dispersion parameter helps us gauge the precision of our predictions and the consistency of the response variable. In `beta_model` we only modeled the dispersion of the intercept. When $\phi$ is not specified, the intercept is modeled by default.
 
+::: to-webr
+
 ```{r}
 #| echo: true
 
@@ -297,6 +291,9 @@ beta_model <- glmmTMB(
   family = beta_family(link = "logit")
 )
 ```
+:::
+
+::: to-webr
 
 ```{r}
 #| label: tbl-phi
@@ -311,13 +308,16 @@ beta_model |>
   filter(Component == "dispersion") |>
   tt(digits = 3)
 ```
+:::
 
 We can model the dispersion of the `Fluency` factor—this allows dispersion to differ between the fluent and disfluent conditions. To do this we add a `disp` argument to our `glmmTMB` function call. In the below model, `beta_model_dis`, we model the precision of the `Fluency` factor by using a `~` and adding factors of interest to the right of it
+
+::: to-webr
 
 ```{r}
 #| echo: true
 
-# add disp/percison for fluency by including factors 
+# add disp/percison for fluency by including factors
 beta_model_dis <- glmmTMB(
   Accuracy ~ Fluency,
   disp = ~Fluency, # phi for fluency_dummy
@@ -325,14 +325,18 @@ beta_model_dis <- glmmTMB(
   family = beta_family(link = "logit")
 )
 ```
+:::
+
+::: to-webr
 
 ```{r}
 #| label: phi-beta
 #| echo: true
 
 beta_model_dis_nonexp <- beta_model_dis |>
-  model_parameters() 
+  model_parameters()
 ```
+:::
 
 ```{r}
 #| label: tbl-phi-beta
@@ -341,7 +345,7 @@ beta_model_dis_nonexp <- beta_model_dis |>
 
 beta_model_dis_nonexp |>
   as.data.frame() |>
-   mutate(p = ifelse(p < .001, "<.001", round(p, 3)))|>
+  mutate(p = ifelse(p < .001, "<.001", round(p, 3))) |>
   rename(dfError = "df_error") |>
   filter(Component == "dispersion") |>
   tt(digits = 3)
@@ -358,16 +362,20 @@ To use the Beta distribution we removed 0s and 1s--which is never a good idea in
 With zero-inflated regression, we’re actually modelling a mixture of the data-generating process. The $\alpha$ parameter uses a logistic regression to model whether the data is 0 or not. Substantively, this could be a useful model when we think that 0s come from a process that is relatively distinct from the data that is greater than 0. For example, if we had a dataset of how much teenagers smoke per week, we might want a separate model for the 0s because non-smokers are substantively different in that they never smoke, and first must choose to become smokers before we will record non-zero values.
 
 Below we fit a model called `beta_model_0` using the `glmmTMB` package. In the `glmmTMB` function, we can model the zero inflation by including an argument called `ziformula`. This allows us to model the new parameter $\alpha$. Before we fit this model, we remove accuracy values equal to 1.
+::: to-webr
 
 ```{r}
 #| label: change 1s
 #| echo: true
 # keep 0 but transform 1 to .99
 data_beta_0 <- fluency_data |>
-  filter(Accuracy!=1)
+  filter(Accuracy != 1)
 ```
+:::
+
 
 After we have done this, let's fit a model using our modified dataset (`data_beta_0` where there is a zero-inflated component for `Fluency`).
+::: to-webr
 
 ```{r}
 #| label: glmmTMB zib
@@ -383,8 +391,10 @@ beta_model_0 <- glmmTMB(
   family = beta_family(link = "logit")
 )
 ```
+:::
 
 ### Model parameters
+::: to-webr
 
 ```{r}
 #| label: beta-model-zero
@@ -395,17 +405,22 @@ beta_model_0 <- glmmTMB(
 model_zi <- model_parameters(beta_model_0)
 
 ```
+:::
+
+::: to-webr
 
 ```{r}
 #| label: tbl-beta-model-zero
 #| echo: false
-#| 
+#|
 
 model_zi |>
   mutate(p = round(p, 3), p = ifelse(p == 0, "p < .001", p)) |>
   select(-Effects) |>
   tt(digits = 3)
 ```
+::: 
+
 
 @tbl-beta-model-zero provides a summary of the output for our zib model. As before, we can use the `model_paramters` function to extract the relevant coefficients.The $\mu$ parameter estimates, which have the conditional tag in the `Component` column are on the logit scale; while $\phi$ parameter coefficients (tagged as dispersion in the `Component` column) are on the log scale. In addition, the zero-inflated parameter estimates (tagged as zero-inflated in the `Component` column) are on the logit scale.
 
@@ -415,7 +430,7 @@ Looking at the $\mu$ part of the model, there is no significant effect for `Flue
 
 #### $\alpha$
 
-However, for the zero-inflated part of the model, the `Fluency` predictor is margianlly significant, b = `r round(model_zi$Coefficient[4], 3)` , SE = `r round(beta_model_dis_results$SE[4], 3)` , 95% CIs = \[`r round(beta_model_dis_results$CI_low[4], 3)`,`r round(beta_model_dis_results$CI_high[4], 3)`\], p = `r round(beta_model_dis_results$p[4], 3)`.
+However, for the zero-inflated part of the model, the `Fluency` predictor is margianlly significant, b = `r round(model_zi$Coefficient[4], 3)` , SE = `r round(model_zi$SE[4], 3)` , 95% CIs = \[`r round(model_zi$CI_low[4], 3)`,`r round(model_zi$CI_high[4], 3)`\], p = `r round(model_zi$p[4], 3)`.
 
 #### $\phi$
 
@@ -425,6 +440,8 @@ Lastly the dispersion estimate for `Fluency` is significant, b = `r round(model_
 
 Similar to above, we can back-transform our estimates to get probabilities. Focusing on the zero-inflated part of our model (you can use prevuosuly highlighted code to get $\mu$ and $\phi$), we can use the `avg_predictions` function from `marginaleffects` package. Because we are interested in the zero-inflated part of the model we set the `type` argument to `zprob`.
 
+::: to-webr
+
 ```{r}
 #| label: zero-margeffects
 #| tbl-cap: Predicted probablites (zero-inflated) for flueny factor
@@ -433,48 +450,59 @@ Similar to above, we can back-transform our estimates to get probabilities. Focu
 beta_model_table <- beta_model_0 |>
   marginaleffects::avg_predictions(by = "Fluency", type = "zprob")
 ```
+:::
+::: to-webr
 
 ```{r}
 #| label: tbl-predict-zero
 #| echo: false
 
-# get table for 
+# get table for
 beta_model_table |>
-  as.data.frame()|>
+  as.data.frame() |>
   select(Fluency, estimate) |>
   tt(digits = 3)
 
 ```
+:::
+
+::: to-webr
 
 ```{r}
 #| echo: true
 #| label: marg-zib
 #| tbl-cap: Risk difference (zero-inflated) for fluency
 
-
 zob_marg <- beta_model_0 |>
   marginaleffects::avg_comparisons(
     variables = "Fluency",
     type = "zprob",
-    comparison = "difference", 
+    comparison = "difference",
   )
 ```
+:::
+
+::: to-webr
 
 ```{r}
 #| echo: false
 #| label: tbl-marg-zib
-# get table for 
+# get table for
 zob_marg |>
-  as.data.frame()|>
+  as.data.frame() |>
   tt(digits = 3)
 
 ```
+::: 
+
 
 Interpreting the estimates in @tbl-marg-zib, seeing lecture videos with a fluent instructor reduces the proportion of zeros by about 13%, which is statistically significant, b = `r round(zob_marg$estimate, 3)` , SE = `r round(zob_marg$std.error, 3)` , 95% CIs = \[`r round(zob_marg$conf.low, 3)`,`r round(zob_marg$conf.high, 3)`\], p = `r round(zob_marg$p.value, 3)`. Here we have evidence that participants are more likely to do more poorly (have more zeros) after watching a disflueny lecture.
 
 ## Ordered Beta regression
 
 We can run an ordered beta regression using the `glmmTMB` function and by changing the `family` argument to `ordbeta`.
+
+::: to-webr
 
 ```{r}
 #| label: run ordered beta regression
@@ -485,6 +513,9 @@ ord_fit <- glmmTMB(
   family = ordbeta
 )
 ```
+:::
+
+::: to-webr
 
 ```{r}
 #| label: tbl-ordbeta-glmm
@@ -496,6 +527,8 @@ ord_fit |>
   tt(digits = 2) |>
   format_tt(escape = TRUE)
 ```
+::: 
+
 
 #### Model Parameters
 
@@ -507,17 +540,21 @@ If we take a look at the summary output in @tbl-ordbeta-glmm, we can interpret t
 
 @tbl-ordbeta-glmm also includes an overall $\phi$ component. Similar to our other models we can model the variability as a function of fluency.
 
+::: to-webr
 ```{r}
 #| label: glmmtmb ordbeta
 
 ord_fit_dis <- glmmTMB(
   formula = Accuracy ~ Fluency,
-  disp=~Fluency, 
+  disp = ~Fluency,
   data = fluency_data,
   family = ordbeta
 )
 
 ```
+::: 
+
+::: to-webr
 
 ```{r}
 #| label: tbl-ordbeta-glmm-disp
@@ -528,6 +565,8 @@ ord_fit_dis |>
   tt(digits = 2) |>
   format_tt(escape = TRUE)
 ```
+::: 
+
 
 Similar to before, including the dispersion parameter introduces more uncertainty into the $\mu$ estimate.
 
@@ -537,50 +576,9 @@ Remember these values are on the logit scale so we can take the inverse and get 
 
 We can get the risk difference as well. These values are in @tbl-ordbeta-risk.
 
-```{r}
-#| label: tbl-ordbeta-summ-brms
-#| tbl-cap: Model summary for ordered beta model
-#| echo: false
-
-ord_fit_brms |>
-  model_parameters() |>
-  tt() |>
-  format_tt(digits = 3)
-```
-
 ### $\phi$
 
-@tbl-ordbeta-summ also includes an overall phi component. Similar to our other models we can model the variability as a function of fluency. Let’s try this in our model:
-
-```{r}
-#| label: brms ordered beta model phi
-#| results: hide
-#| echo: true
-
-
-m.phi <- ordbetareg(bf(Accuracy ~ Fluency_dummy, 
-                       phi ~ Fluency_dummy),
-                    data=fluency_data,
-                    backend = "cmdstanr",
-                     file = "model_beta_ordbeta_phi", 
-                    iter = 2000, 
-                    cores=4, 
-                    phi_reg='both') # log phi
-summary(m.phi)
-
-```
-
-Note the addition of the `phi_reg` argument. This argument allows us to include a model that explicitly models the dispersion parameter. Because I am modeling $\phi$ as a function of fluency, I set the argument to `both`.
-
-```{r}
-#| echo: false
-#| label: tbl-phi-ordbeta
-m.phi |>
-  model_parameters() |>
-  tt() |>
-  format_tt(digits = 3)
-
-```
+@tbl-ordbeta-summ also includes an overall phi component. Similar to our other models we can model the variability as a function of fluency. Let’s try this in our model: Note the addition of the `phi_reg` argument. This argument allows us to include a model that explicitly models the dispersion parameter. Because I am modeling $\phi$ as a function of fluency, I set the argument to `both`
 
 In @tbl-phi-ordbeta, `b_phi_Fluency_dummy1` is close enough to 0 relative to its uncertainty, we can say that in this case there likely aren’t major differences in variance between the fluent disfluent conditions
 
@@ -589,8 +587,7 @@ In @tbl-phi-ordbeta, `b_phi_Fluency_dummy1` is close enough to 0 relative to its
 A new type of regression known as XBX regression can be used for data that contain 0s and 1s.
 
 ```{r}
-la_xbx <- betareg(Accuracy ~ Fluency  | Fluency,
-  data = fluency_data)
+la_xbx <- betareg(Accuracy ~ Fluency | Fluency, data = fluency_data)
 ```
 
 # References
