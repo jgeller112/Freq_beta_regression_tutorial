@@ -87,10 +87,14 @@ div.csl-indent {
 <script src="beta_freq_files/libs/quarto-html/tippy.umd.min.js"></script>
 <script src="beta_freq_files/libs/quarto-html/anchor.min.js"></script>
 <link href="beta_freq_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="beta_freq_files/libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="beta_freq_files/libs/quarto-html/quarto-syntax-highlighting-a14e345711173c227b21482e2eb4cc70.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="beta_freq_files/libs/quarto-html/quarto-syntax-highlighting-dark-6d7e0e055978adcb0dc3bbe98a6d8351.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="beta_freq_files/libs/quarto-html/quarto-syntax-highlighting-a14e345711173c227b21482e2eb4cc70.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="beta_freq_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="beta_freq_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="beta_freq_files/libs/bootstrap/bootstrap-d6a003b94517c951b2d65075d42fb01b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="beta_freq_files/libs/bootstrap/bootstrap-85199af0d134b1f7eb4e4f9b0d4fc438.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="beta_freq_files/libs/bootstrap/bootstrap-dark-84c1c1908de775dc10927b300d9f8a94.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="beta_freq_files/libs/bootstrap/bootstrap-85199af0d134b1f7eb4e4f9b0d4fc438.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/monaco-editor@0.47.0/min/vs/editor/editor.main.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   
@@ -1677,11 +1681,201 @@ window.Quarto = {
 
 </head>
 
-<body class="fullcontent quarto-light">
+<body class="quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#data-and-methods" id="toc-data-and-methods" class="nav-link active" data-scroll-target="#data-and-methods"><span class="header-section-number">0.1</span> Data and Methods</a></li>
+  <li><a href="#reanalysis-of-wilford-et-al.-experiment-1a" id="toc-reanalysis-of-wilford-et-al.-experiment-1a" class="nav-link" data-scroll-target="#reanalysis-of-wilford-et-al.-experiment-1a"><span class="header-section-number">0.2</span> Reanalysis of Wilford et al.&nbsp;Experiment 1a</a></li>
+  <li><a href="#packages-meeded" id="toc-packages-meeded" class="nav-link" data-scroll-target="#packages-meeded"><span class="header-section-number">1</span> Packages Meeded</a>
+  <ul class="collapse">
+  <li><a href="#beta-regression-approach" id="toc-beta-regression-approach" class="nav-link" data-scroll-target="#beta-regression-approach"><span class="header-section-number">1.1</span> Beta regression approach</a>
+  <ul class="collapse">
+  <li><a href="#model-parameters" id="toc-model-parameters" class="nav-link" data-scroll-target="#model-parameters"><span class="header-section-number">1.1.1</span> Model parameters</a></li>
+  <li><a href="#model-parameters-1" id="toc-model-parameters-1" class="nav-link" data-scroll-target="#model-parameters-1"><span class="header-section-number">1.1.2</span> Model parameters</a></li>
+  <li><a href="#predicted-probabilities-and-marginal-effects" id="toc-predicted-probabilities-and-marginal-effects" class="nav-link" data-scroll-target="#predicted-probabilities-and-marginal-effects"><span class="header-section-number">1.1.3</span> Predicted probabilities and marginal effects</a></li>
+  </ul></li>
+  <li><a href="#ordered-beta-regression" id="toc-ordered-beta-regression" class="nav-link" data-scroll-target="#ordered-beta-regression"><span class="header-section-number">1.2</span> Ordered Beta regression</a>
+  <ul class="collapse">
+  <li><a href="#phi-2" id="toc-phi-2" class="nav-link" data-scroll-target="#phi-2"><span class="header-section-number">1.2.1</span> <span class="math inline">\(\phi\)</span></a></li>
+  </ul></li>
+  <li><a href="#xbx-regression" id="toc-xbx-regression" class="nav-link" data-scroll-target="#xbx-regression"><span class="header-section-number">1.3</span> XBX Regression</a></li>
+  </ul></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">2</span> References</a>
+  <ul class="collapse">
+  <li><a href="#sesssion-info" id="toc-sesssion-info" class="nav-link" data-scroll-target="#sesssion-info"><span class="header-section-number">2.1</span> Sesssion Info</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
 <main class="content" id="quarto-document-content">
+
 <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.47.0/min/vs/loader.js"></script>
 <script type="module" id="qwebr-monaco-editor-init">
 
@@ -2011,21 +2205,21 @@ Note
 <p>This document provides a practical overview of how to run beta regression models using a frequentist approach. It is intended as a companion to our article, <em>“A Beta Way: A Tutorial for Using Beta Regression in Psychological Research.”</em> For additional theoretical background, methodological details, and extended examples, readers should consult the full article. The present guide focuses specifically on the R packages and workflows available for fitting frequentist beta regression models.</p>
 </div>
 </div>
-<section id="data-and-methods" class="level2">
-<h2 class="anchored" data-anchor-id="data-and-methods">Data and Methods</h2>
+<section id="data-and-methods" class="level2" data-number="0.1">
+<h2 data-number="0.1" class="anchored" data-anchor-id="data-and-methods"><span class="header-section-number">0.1</span> Data and Methods</h2>
 <p>The principles of beta regression are best understood in the context of a real data set. The example we are gonna use comes from the learning and memory literature. A whole host of literature has shown extrinsic cues like fluency (i.e., how easy something is to process) can influence metamemory (i.e., how well we think we will remember something). As an interesting example, a line of research has focused on instructor fluency and how that influences both metamemory and actual learning. When an instructor uses lots of non-verbal gestures, has variable voice dynamics/intonation, is mobile about the space, and includes appropriate pauses when delivering content, participants perceive them as more fluent, but it does not influence actual memory performance, or what we learn from them <span class="citation" data-cites="carpenter2013 toftness2017 witherby2022">(<a href="#ref-carpenter2013" role="doc-biblioref">Carpenter et al. 2013</a>; <a href="#ref-toftness2017" role="doc-biblioref">Toftness et al. 2017</a>; <a href="#ref-witherby2022" role="doc-biblioref">Witherby and Carpenter 2022</a>)</span>. While fluency of instructor has not been found to impact actual memory across several studies, <span class="citation" data-cites="wilford2020">Wilford et al. (<a href="#ref-wilford2020" role="doc-biblioref">2020</a>)</span> found that it can. In several experiments, <span class="citation" data-cites="wilford2020">Wilford et al. (<a href="#ref-wilford2020" role="doc-biblioref">2020</a>)</span> showed that when participants watched multiple videos of a fluent vs.&nbsp;a disfluent instructor (here two videos as opposed to one), they remembered more information on a final test. Given the interesting, and contradictory results, we chose this paper to highlight. In the current tutorial we are going to re-analyze the final recall data from Wilford et al.&nbsp;(2021; Experiment 1a). In the spirit of open science, the authors made their data available here:<a href="https://osf.io/6tyn4/" class="uri">https://osf.io/6tyn4/</a>.</p>
 <p>Accuracy data is widely used in psychology and is well suited for Beta regression. Despite this, it is common to treat accuracy data as continuous and unbounded, and analyze the resulting proportions using methods that fall under the general linear model. Below we will reproduce the analysis conducted by <span class="citation" data-cites="wilford2020">Wilford et al. (<a href="#ref-wilford2020" role="doc-biblioref">2020</a>)</span> (Experiment 1a) and then re-analyze it using Beta regression. We hope to show how Beta regression and its extensions can be a more powerful tool in making inferences about your data.</p>
 <p>In <span class="citation" data-cites="wilford2020">Wilford et al. (<a href="#ref-wilford2020" role="doc-biblioref">2020</a>)</span> (Expt 1a), they presented participants with two short videos highlighting two different concepts: (1) genetics of calico cats and (2) an explanation as to why skin wrinkles. Participants viewed either disfluent or fluent versions of these videos.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> For each video, metamemory was assessed using JOLs. JOLs require participants to rate an item on scale between 0-100 with 0 representing the item will not be remembered and a 100 representing they will definitely remember the item. In addition, other questions about the instructor were assessed and how much they learned. After a distractor task, a final free recall test was given were participants had to recall as much information about the video as they could in 3 minutes. Participants could score up to 10 points for each video. Here we will only being looking at the final recall data, but you could also analyze the JOL data with a beta regression.</p>
 </section>
-<section id="reanalysis-of-wilford-et-al.-experiment-1a" class="level2">
-<h2 class="anchored" data-anchor-id="reanalysis-of-wilford-et-al.-experiment-1a">Reanalysis of Wilford et al.&nbsp;Experiment 1a</h2>
-<section id="load-packages-and-data" class="level4">
-<h4 class="anchored" data-anchor-id="load-packages-and-data">Load packages and data</h4>
+<section id="reanalysis-of-wilford-et-al.-experiment-1a" class="level2" data-number="0.2">
+<h2 data-number="0.2" class="anchored" data-anchor-id="reanalysis-of-wilford-et-al.-experiment-1a"><span class="header-section-number">0.2</span> Reanalysis of Wilford et al.&nbsp;Experiment 1a</h2>
+<section id="load-packages-and-data" class="level4" data-number="0.2.0.1">
+<h4 data-number="0.2.0.1" class="anchored" data-anchor-id="load-packages-and-data"><span class="header-section-number">0.2.0.1</span> Load packages and data</h4>
 <p>As a first step, we will load the necessary packages along with the data we will be using. While we load all the necessary packages here, we also highlight when packages are needed as code chunks are run.</p>
 </section>
 </section>
-<section id="packages-meeded" class="level1">
-<h1>Packages Meeded</h1>
+<section id="packages-meeded" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Packages Meeded</h1>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Result</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Interactive</a></li></ul>
 <div class="tab-content">
@@ -2062,8 +2256,8 @@ Note
 </div>
 </div>
 </div>
-<section id="beta-regression-approach" class="level2">
-<h2 class="anchored" data-anchor-id="beta-regression-approach">Beta regression approach</h2>
+<section id="beta-regression-approach" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="beta-regression-approach"><span class="header-section-number">1.1</span> Beta regression approach</h2>
 <p>Using a traditional approach, we observed instructor fluency impacts actual learning. Keep in mind the traditional approach assumes normality of residuals and homoscadacity or constant variance. These assumptions are tricky to maintain when the continuous response approaches either the upper or lower boundary of the scale.</p>
 <p>One solution would be to run a beta regression model. Below we fit a beta regression using the <code>glmmTMB</code>package <span class="citation" data-cites="glmmTMB-4">(<a href="#ref-glmmTMB-4" role="doc-biblioref">Brooks et al. 2017</a>)</span>. This a popular package for running maximum likelihood (MLE) beta regressions with and without varying intercepts/random effects. Other packages that can be used to run beta regression include <code>betareg</code> <span class="citation" data-cites="betareg">(<a href="#ref-betareg" role="doc-biblioref">Cribari-Neto and Zeileis 2010</a>)</span> and also <code>gamlss</code> <span class="citation" data-cites="gamlss">(<a href="#ref-gamlss" role="doc-biblioref">2005</a>)</span>. In <code>glmmTMB</code> we fit a beta regression by using a formula similar to the ols model we fit above. However, we must specify the <code>family</code> argument as <code>beta_family(link = "logit")</code> to fit a vanilla beta regression.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
@@ -2100,8 +2294,8 @@ Table&nbsp;1: Number of zeros and ones in our dataset
 
     <script>
 
-      function styleCell_1060k1w2leew90eyvnjn(i, j, css_id) {
-          var table = document.getElementById("tinytable_1060k1w2leew90eyvnjn");
+      function styleCell_07ipr41pl0qj817yu84p(i, j, css_id) {
+          var table = document.getElementById("tinytable_07ipr41pl0qj817yu84p");
           var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
           if (cell) {
               console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
@@ -2111,7 +2305,7 @@ Table&nbsp;1: Number of zeros and ones in our dataset
           }
       }
       function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_1060k1w2leew90eyvnjn');
+        var table = document.getElementById('tinytable_07ipr41pl0qj817yu84p');
         var newRow = table.insertRow(i);
         var newCell = newRow.insertCell(0);
         newCell.setAttribute("colspan", colspan);
@@ -2119,8 +2313,8 @@ Table&nbsp;1: Number of zeros and ones in our dataset
         // this may be unsafe, but innerText does not interpret <br>
         newCell.innerHTML = content;
       }
-      function spanCell_1060k1w2leew90eyvnjn(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_1060k1w2leew90eyvnjn");
+      function spanCell_07ipr41pl0qj817yu84p(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_07ipr41pl0qj817yu84p");
         const targetRow = table.rows[i];
         const targetCell = targetRow.cells[j];
         for (let r = 0; r < rowspan; r++) {
@@ -2150,14 +2344,14 @@ Table&nbsp;1: Number of zeros and ones in our dataset
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: 2, j: 0 }, { i: 2, j: 1 },  ], css_id: 'tinytable_css_u56vqooq3w9oqy1t71ah',}, 
-          { positions: [ { i: 0, j: 0 }, { i: 0, j: 1 },  ], css_id: 'tinytable_css_x30khsj0yckkyv3kzg0p',}, 
+          { positions: [ { i: 2, j: 0 }, { i: 2, j: 1 },  ], css_id: 'tinytable_css_fqqjoscyj6xzxwpwaite',}, 
+          { positions: [ { i: 0, j: 0 }, { i: 0, j: 1 },  ], css_id: 'tinytable_css_2zr3zyxnxrtqudlrdg1v',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  styleCell_1060k1w2leew90eyvnjn(cell.i, cell.j, group.css_id);
+                  styleCell_07ipr41pl0qj817yu84p(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -2165,11 +2359,11 @@ Table&nbsp;1: Number of zeros and ones in our dataset
 
     <style>
       /* tinytable css entries after */
-      .table td.tinytable_css_u56vqooq3w9oqy1t71ah, .table th.tinytable_css_u56vqooq3w9oqy1t71ah { border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_x30khsj0yckkyv3kzg0p, .table th.tinytable_css_x30khsj0yckkyv3kzg0p { border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_fqqjoscyj6xzxwpwaite, .table th.tinytable_css_fqqjoscyj6xzxwpwaite { border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_2zr3zyxnxrtqudlrdg1v, .table th.tinytable_css_2zr3zyxnxrtqudlrdg1v { border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_1060k1w2leew90eyvnjn" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="table table-borderless" id="tinytable_07ipr41pl0qj817yu84p" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         <thead>
         
               <tr>
@@ -2219,11 +2413,11 @@ Table&nbsp;1: Number of zeros and ones in our dataset
 </div>
 <p>:::</p>
 <p>No errors this time!</p>
-<section id="model-parameters" class="level3">
-<h3 class="anchored" data-anchor-id="model-parameters">Model parameters</h3>
+<section id="model-parameters" class="level3" data-number="1.1.1">
+<h3 data-number="1.1.1" class="anchored" data-anchor-id="model-parameters"><span class="header-section-number">1.1.1</span> Model parameters</h3>
 <p><a href="#tbl-beta-cond" class="quarto-xref">Table&nbsp;2</a> provides a summary of the output for our Beta regression model. The <span class="math inline">\(\mu\)</span> parameter estimates, which have the conditional tag in the <code>Component</code> column while <span class="math inline">\(\phi\)</span> parameter coefficients are tagged as dispersion in the <code>Component</code> column).</p>
-<section id="mu-component" class="level4">
-<h4 class="anchored" data-anchor-id="mu-component"><span class="math inline">\(\mu\)</span> component</h4>
+<section id="mu-component" class="level4" data-number="1.1.1.1">
+<h4 data-number="1.1.1.1" class="anchored" data-anchor-id="mu-component"><span class="header-section-number">1.1.1.1</span> <span class="math inline">\(\mu\)</span> component</h4>
 <div class="to-webr">
 <div class="cell" data-tbl-cap-location="top">
 <div id="tbl-beta-cond" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-tbl-cap-location="top">
@@ -2237,8 +2431,8 @@ Table&nbsp;2: Model summary for the mu parameter in beta regression model
 
     <script>
 
-      function styleCell_0og4xkfag4lcneit29vh(i, j, css_id) {
-          var table = document.getElementById("tinytable_0og4xkfag4lcneit29vh");
+      function styleCell_4mm71pzdaujc183189ky(i, j, css_id) {
+          var table = document.getElementById("tinytable_4mm71pzdaujc183189ky");
           var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
           if (cell) {
               console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
@@ -2248,7 +2442,7 @@ Table&nbsp;2: Model summary for the mu parameter in beta regression model
           }
       }
       function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_0og4xkfag4lcneit29vh');
+        var table = document.getElementById('tinytable_4mm71pzdaujc183189ky');
         var newRow = table.insertRow(i);
         var newCell = newRow.insertCell(0);
         newCell.setAttribute("colspan", colspan);
@@ -2256,8 +2450,8 @@ Table&nbsp;2: Model summary for the mu parameter in beta regression model
         // this may be unsafe, but innerText does not interpret <br>
         newCell.innerHTML = content;
       }
-      function spanCell_0og4xkfag4lcneit29vh(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_0og4xkfag4lcneit29vh");
+      function spanCell_4mm71pzdaujc183189ky(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_4mm71pzdaujc183189ky");
         const targetRow = table.rows[i];
         const targetCell = targetRow.cells[j];
         for (let r = 0; r < rowspan; r++) {
@@ -2287,14 +2481,14 @@ Table&nbsp;2: Model summary for the mu parameter in beta regression model
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: 3, j: 0 }, { i: 3, j: 1 }, { i: 3, j: 2 }, { i: 3, j: 3 }, { i: 3, j: 4 }, { i: 3, j: 5 }, { i: 3, j: 6 }, { i: 3, j: 7 }, { i: 3, j: 8 }, { i: 3, j: 9 }, { i: 3, j: 10 },  ], css_id: 'tinytable_css_xnwkab5tqmu391uzuoa4',}, 
-          { positions: [ { i: 0, j: 0 }, { i: 0, j: 1 }, { i: 0, j: 2 }, { i: 0, j: 3 }, { i: 0, j: 4 }, { i: 0, j: 5 }, { i: 0, j: 6 }, { i: 0, j: 7 }, { i: 0, j: 8 }, { i: 0, j: 9 }, { i: 0, j: 10 },  ], css_id: 'tinytable_css_8zvvgvjg1kemx7v14914',}, 
+          { positions: [ { i: 3, j: 0 }, { i: 3, j: 1 }, { i: 3, j: 2 }, { i: 3, j: 3 }, { i: 3, j: 4 }, { i: 3, j: 5 }, { i: 3, j: 6 }, { i: 3, j: 7 }, { i: 3, j: 8 }, { i: 3, j: 9 }, { i: 3, j: 10 },  ], css_id: 'tinytable_css_f2bb3m3wvrs4mkbvjwvy',}, 
+          { positions: [ { i: 0, j: 0 }, { i: 0, j: 1 }, { i: 0, j: 2 }, { i: 0, j: 3 }, { i: 0, j: 4 }, { i: 0, j: 5 }, { i: 0, j: 6 }, { i: 0, j: 7 }, { i: 0, j: 8 }, { i: 0, j: 9 }, { i: 0, j: 10 },  ], css_id: 'tinytable_css_chhihts9xcwp1bgmx9pi',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  styleCell_0og4xkfag4lcneit29vh(cell.i, cell.j, group.css_id);
+                  styleCell_4mm71pzdaujc183189ky(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -2302,11 +2496,11 @@ Table&nbsp;2: Model summary for the mu parameter in beta regression model
 
     <style>
       /* tinytable css entries after */
-      .table td.tinytable_css_xnwkab5tqmu391uzuoa4, .table th.tinytable_css_xnwkab5tqmu391uzuoa4 { border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_8zvvgvjg1kemx7v14914, .table th.tinytable_css_8zvvgvjg1kemx7v14914 { border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_f2bb3m3wvrs4mkbvjwvy, .table th.tinytable_css_f2bb3m3wvrs4mkbvjwvy { border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_chhihts9xcwp1bgmx9pi, .table th.tinytable_css_chhihts9xcwp1bgmx9pi { border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_0og4xkfag4lcneit29vh" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="table table-borderless" id="tinytable_4mm71pzdaujc183189ky" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         <thead>
         
               <tr>
@@ -2401,8 +2595,8 @@ Table&nbsp;2: Model summary for the mu parameter in beta regression model
 </div>
 </section>
 </section>
-<section id="model-parameters-1" class="level3">
-<h3 class="anchored" data-anchor-id="model-parameters-1">Model parameters</h3>
+<section id="model-parameters-1" class="level3" data-number="1.1.2">
+<h3 data-number="1.1.2" class="anchored" data-anchor-id="model-parameters-1"><span class="header-section-number">1.1.2</span> Model parameters</h3>
 <div class="to-webr">
 
 </div>
@@ -2419,8 +2613,8 @@ Table&nbsp;3
 
     <script>
 
-      function styleCell_muc6xcc3uey5m7u5v1ej(i, j, css_id) {
-          var table = document.getElementById("tinytable_muc6xcc3uey5m7u5v1ej");
+      function styleCell_zt0cot4eci03dwpxe87q(i, j, css_id) {
+          var table = document.getElementById("tinytable_zt0cot4eci03dwpxe87q");
           var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
           if (cell) {
               console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
@@ -2430,7 +2624,7 @@ Table&nbsp;3
           }
       }
       function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_muc6xcc3uey5m7u5v1ej');
+        var table = document.getElementById('tinytable_zt0cot4eci03dwpxe87q');
         var newRow = table.insertRow(i);
         var newCell = newRow.insertCell(0);
         newCell.setAttribute("colspan", colspan);
@@ -2438,8 +2632,8 @@ Table&nbsp;3
         // this may be unsafe, but innerText does not interpret <br>
         newCell.innerHTML = content;
       }
-      function spanCell_muc6xcc3uey5m7u5v1ej(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_muc6xcc3uey5m7u5v1ej");
+      function spanCell_zt0cot4eci03dwpxe87q(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_zt0cot4eci03dwpxe87q");
         const targetRow = table.rows[i];
         const targetCell = targetRow.cells[j];
         for (let r = 0; r < rowspan; r++) {
@@ -2469,14 +2663,14 @@ Table&nbsp;3
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: 6, j: 0 }, { i: 6, j: 1 }, { i: 6, j: 2 }, { i: 6, j: 3 }, { i: 6, j: 4 }, { i: 6, j: 5 }, { i: 6, j: 6 }, { i: 6, j: 7 }, { i: 6, j: 8 }, { i: 6, j: 9 },  ], css_id: 'tinytable_css_06ul4qukbqxjhvnls8yk',}, 
-          { positions: [ { i: 0, j: 0 }, { i: 0, j: 1 }, { i: 0, j: 2 }, { i: 0, j: 3 }, { i: 0, j: 4 }, { i: 0, j: 5 }, { i: 0, j: 6 }, { i: 0, j: 7 }, { i: 0, j: 8 }, { i: 0, j: 9 },  ], css_id: 'tinytable_css_xorxcf21bkitw90657cd',}, 
+          { positions: [ { i: 6, j: 0 }, { i: 6, j: 1 }, { i: 6, j: 2 }, { i: 6, j: 3 }, { i: 6, j: 4 }, { i: 6, j: 5 }, { i: 6, j: 6 }, { i: 6, j: 7 }, { i: 6, j: 8 }, { i: 6, j: 9 },  ], css_id: 'tinytable_css_8j4vo41e6562ufgs8xwa',}, 
+          { positions: [ { i: 0, j: 0 }, { i: 0, j: 1 }, { i: 0, j: 2 }, { i: 0, j: 3 }, { i: 0, j: 4 }, { i: 0, j: 5 }, { i: 0, j: 6 }, { i: 0, j: 7 }, { i: 0, j: 8 }, { i: 0, j: 9 },  ], css_id: 'tinytable_css_bukn4tt5y5n3iftto8af',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  styleCell_muc6xcc3uey5m7u5v1ej(cell.i, cell.j, group.css_id);
+                  styleCell_zt0cot4eci03dwpxe87q(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -2484,11 +2678,11 @@ Table&nbsp;3
 
     <style>
       /* tinytable css entries after */
-      .table td.tinytable_css_06ul4qukbqxjhvnls8yk, .table th.tinytable_css_06ul4qukbqxjhvnls8yk { border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_xorxcf21bkitw90657cd, .table th.tinytable_css_xorxcf21bkitw90657cd { border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_8j4vo41e6562ufgs8xwa, .table th.tinytable_css_8j4vo41e6562ufgs8xwa { border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_bukn4tt5y5n3iftto8af, .table th.tinytable_css_bukn4tt5y5n3iftto8af { border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_muc6xcc3uey5m7u5v1ej" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="table table-borderless" id="tinytable_zt0cot4eci03dwpxe87q" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         <thead>
         
               <tr>
@@ -2589,21 +2783,21 @@ Table&nbsp;3
 </div>
 </div>
 <p><a href="#tbl-beta-model-zero" class="quarto-xref">Table&nbsp;3</a> provides a summary of the output for our zib model. As before, we can use the <code>model_paramters</code> function to extract the relevant coefficients.The <span class="math inline">\(\mu\)</span> parameter estimates, which have the conditional tag in the <code>Component</code> column are on the logit scale; while <span class="math inline">\(\phi\)</span> parameter coefficients (tagged as dispersion in the <code>Component</code> column) are on the log scale. In addition, the zero-inflated parameter estimates (tagged as zero-inflated in the <code>Component</code> column) are on the logit scale.</p>
-<section id="mu" class="level4">
-<h4 class="anchored" data-anchor-id="mu"><span class="math inline">\(\mu\)</span></h4>
+<section id="mu" class="level4" data-number="1.1.2.1">
+<h4 data-number="1.1.2.1" class="anchored" data-anchor-id="mu"><span class="header-section-number">1.1.2.1</span> <span class="math inline">\(\mu\)</span></h4>
 <p>Looking at the <span class="math inline">\(\mu\)</span> part of the model, there is no significant effect for <code>Fluency</code>, b = 0.204 , SE = 0.17 , 95% CIs = [-0.129,0.538], p = 0.23</p>
 </section>
-<section id="alpha" class="level4">
-<h4 class="anchored" data-anchor-id="alpha"><span class="math inline">\(\alpha\)</span></h4>
+<section id="alpha" class="level4" data-number="1.1.2.2">
+<h4 data-number="1.1.2.2" class="anchored" data-anchor-id="alpha"><span class="header-section-number">1.1.2.2</span> <span class="math inline">\(\alpha\)</span></h4>
 <p>However, for the zero-inflated part of the model, the <code>Fluency</code> predictor is margianlly significant, b = -2.079 , SE = 1.082 , 95% CIs = [-4.201,0.042], p = 0.055.</p>
 </section>
-<section id="phi" class="level4">
-<h4 class="anchored" data-anchor-id="phi"><span class="math inline">\(\phi\)</span></h4>
+<section id="phi" class="level4" data-number="1.1.2.3">
+<h4 data-number="1.1.2.3" class="anchored" data-anchor-id="phi"><span class="header-section-number">1.1.2.3</span> <span class="math inline">\(\phi\)</span></h4>
 <p>Lastly the dispersion estimate for <code>Fluency</code> is significant, b = 0.43 , SE = 0.288 , 95% CIs = [-0.134,0.994], p = 0.135.</p>
 </section>
 </section>
-<section id="predicted-probabilities-and-marginal-effects" class="level3">
-<h3 class="anchored" data-anchor-id="predicted-probabilities-and-marginal-effects">Predicted probabilities and marginal effects</h3>
+<section id="predicted-probabilities-and-marginal-effects" class="level3" data-number="1.1.3">
+<h3 data-number="1.1.3" class="anchored" data-anchor-id="predicted-probabilities-and-marginal-effects"><span class="header-section-number">1.1.3</span> Predicted probabilities and marginal effects</h3>
 <p>Similar to above, we can back-transform our estimates to get probabilities. Focusing on the zero-inflated part of our model (you can use prevuosuly highlighted code to get <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\phi\)</span>), we can use the <code>avg_predictions</code> function from <code>marginaleffects</code> package. Because we are interested in the zero-inflated part of the model we set the <code>type</code> argument to <code>zprob</code>.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true" href="">Result</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false" href="">Interactive</a></li></ul>
@@ -2631,8 +2825,8 @@ Table&nbsp;4
 
     <script>
 
-      function styleCell_w7b0ly2py5lfjjn4aaz5(i, j, css_id) {
-          var table = document.getElementById("tinytable_w7b0ly2py5lfjjn4aaz5");
+      function styleCell_z61choa1z3cmypmvh0bi(i, j, css_id) {
+          var table = document.getElementById("tinytable_z61choa1z3cmypmvh0bi");
           var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
           if (cell) {
               console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
@@ -2642,7 +2836,7 @@ Table&nbsp;4
           }
       }
       function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_w7b0ly2py5lfjjn4aaz5');
+        var table = document.getElementById('tinytable_z61choa1z3cmypmvh0bi');
         var newRow = table.insertRow(i);
         var newCell = newRow.insertCell(0);
         newCell.setAttribute("colspan", colspan);
@@ -2650,8 +2844,8 @@ Table&nbsp;4
         // this may be unsafe, but innerText does not interpret <br>
         newCell.innerHTML = content;
       }
-      function spanCell_w7b0ly2py5lfjjn4aaz5(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_w7b0ly2py5lfjjn4aaz5");
+      function spanCell_z61choa1z3cmypmvh0bi(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_z61choa1z3cmypmvh0bi");
         const targetRow = table.rows[i];
         const targetCell = targetRow.cells[j];
         for (let r = 0; r < rowspan; r++) {
@@ -2681,14 +2875,14 @@ Table&nbsp;4
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: 2, j: 0 }, { i: 2, j: 1 },  ], css_id: 'tinytable_css_odebzfvdk22jsgh27353',}, 
-          { positions: [ { i: 0, j: 0 }, { i: 0, j: 1 },  ], css_id: 'tinytable_css_jahp2ql0su5lao0a5u3t',}, 
+          { positions: [ { i: 2, j: 0 }, { i: 2, j: 1 },  ], css_id: 'tinytable_css_m6wa9hbjwh31n1h88tnk',}, 
+          { positions: [ { i: 0, j: 0 }, { i: 0, j: 1 },  ], css_id: 'tinytable_css_ofebywwupxgs1p2kh90t',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  styleCell_w7b0ly2py5lfjjn4aaz5(cell.i, cell.j, group.css_id);
+                  styleCell_z61choa1z3cmypmvh0bi(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -2696,11 +2890,11 @@ Table&nbsp;4
 
     <style>
       /* tinytable css entries after */
-      .table td.tinytable_css_odebzfvdk22jsgh27353, .table th.tinytable_css_odebzfvdk22jsgh27353 { border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_jahp2ql0su5lao0a5u3t, .table th.tinytable_css_jahp2ql0su5lao0a5u3t { border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_m6wa9hbjwh31n1h88tnk, .table th.tinytable_css_m6wa9hbjwh31n1h88tnk { border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_ofebywwupxgs1p2kh90t, .table th.tinytable_css_ofebywwupxgs1p2kh90t { border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_w7b0ly2py5lfjjn4aaz5" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="table table-borderless" id="tinytable_z61choa1z3cmypmvh0bi" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         <thead>
         
               <tr>
@@ -2758,8 +2952,8 @@ Table&nbsp;5
 
     <script>
 
-      function styleCell_a9txiw66xgu8if4e9za6(i, j, css_id) {
-          var table = document.getElementById("tinytable_a9txiw66xgu8if4e9za6");
+      function styleCell_roy23b9w6m9duwaj4xbd(i, j, css_id) {
+          var table = document.getElementById("tinytable_roy23b9w6m9duwaj4xbd");
           var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
           if (cell) {
               console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
@@ -2769,7 +2963,7 @@ Table&nbsp;5
           }
       }
       function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_a9txiw66xgu8if4e9za6');
+        var table = document.getElementById('tinytable_roy23b9w6m9duwaj4xbd');
         var newRow = table.insertRow(i);
         var newCell = newRow.insertCell(0);
         newCell.setAttribute("colspan", colspan);
@@ -2777,8 +2971,8 @@ Table&nbsp;5
         // this may be unsafe, but innerText does not interpret <br>
         newCell.innerHTML = content;
       }
-      function spanCell_a9txiw66xgu8if4e9za6(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_a9txiw66xgu8if4e9za6");
+      function spanCell_roy23b9w6m9duwaj4xbd(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_roy23b9w6m9duwaj4xbd");
         const targetRow = table.rows[i];
         const targetCell = targetRow.cells[j];
         for (let r = 0; r < rowspan; r++) {
@@ -2808,14 +3002,14 @@ Table&nbsp;5
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: 1, j: 0 }, { i: 1, j: 1 }, { i: 1, j: 2 }, { i: 1, j: 3 }, { i: 1, j: 4 }, { i: 1, j: 5 }, { i: 1, j: 6 }, { i: 1, j: 7 }, { i: 1, j: 8 },  ], css_id: 'tinytable_css_wkg1ds7uywemy4p2p3yr',}, 
-          { positions: [ { i: 0, j: 0 }, { i: 0, j: 1 }, { i: 0, j: 2 }, { i: 0, j: 3 }, { i: 0, j: 4 }, { i: 0, j: 5 }, { i: 0, j: 6 }, { i: 0, j: 7 }, { i: 0, j: 8 },  ], css_id: 'tinytable_css_xpg9fazynl1f7n3j3tel',}, 
+          { positions: [ { i: 1, j: 0 }, { i: 1, j: 1 }, { i: 1, j: 2 }, { i: 1, j: 3 }, { i: 1, j: 4 }, { i: 1, j: 5 }, { i: 1, j: 6 }, { i: 1, j: 7 }, { i: 1, j: 8 },  ], css_id: 'tinytable_css_h0o1jhl21b4la6agjlix',}, 
+          { positions: [ { i: 0, j: 0 }, { i: 0, j: 1 }, { i: 0, j: 2 }, { i: 0, j: 3 }, { i: 0, j: 4 }, { i: 0, j: 5 }, { i: 0, j: 6 }, { i: 0, j: 7 }, { i: 0, j: 8 },  ], css_id: 'tinytable_css_4b5knd44yin98bpvhp6t',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  styleCell_a9txiw66xgu8if4e9za6(cell.i, cell.j, group.css_id);
+                  styleCell_roy23b9w6m9duwaj4xbd(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -2823,11 +3017,11 @@ Table&nbsp;5
 
     <style>
       /* tinytable css entries after */
-      .table td.tinytable_css_wkg1ds7uywemy4p2p3yr, .table th.tinytable_css_wkg1ds7uywemy4p2p3yr { border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_xpg9fazynl1f7n3j3tel, .table th.tinytable_css_xpg9fazynl1f7n3j3tel { border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_h0o1jhl21b4la6agjlix, .table th.tinytable_css_h0o1jhl21b4la6agjlix { border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_4b5knd44yin98bpvhp6t, .table th.tinytable_css_4b5knd44yin98bpvhp6t { border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_a9txiw66xgu8if4e9za6" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="table table-borderless" id="tinytable_roy23b9w6m9duwaj4xbd" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         <thead>
         
               <tr>
@@ -2868,8 +3062,8 @@ Table&nbsp;5
 <p>Interpreting the estimates in <a href="#tbl-marg-zib" class="quarto-xref">Table&nbsp;5</a>, seeing lecture videos with a fluent instructor reduces the proportion of zeros by about 13%, which is statistically significant, b = -0.134 , SE = 0.056 , 95% CIs = [-0.243,-0.025], p = 0.016. Here we have evidence that participants are more likely to do more poorly (have more zeros) after watching a disflueny lecture.</p>
 </section>
 </section>
-<section id="ordered-beta-regression" class="level2">
-<h2 class="anchored" data-anchor-id="ordered-beta-regression">Ordered Beta regression</h2>
+<section id="ordered-beta-regression" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="ordered-beta-regression"><span class="header-section-number">1.2</span> Ordered Beta regression</h2>
 <p>We can run an ordered beta regression using the <code>glmmTMB</code> function and by changing the <code>family</code> argument to <code>ordbeta</code>.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-7-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-1" role="tab" aria-controls="tabset-7-1" aria-selected="true" href="">Result</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-2" role="tab" aria-controls="tabset-7-2" aria-selected="false" href="">Interactive</a></li></ul>
@@ -2900,8 +3094,8 @@ Table&nbsp;6
 
     <script>
 
-      function styleCell_oqp1sv4urrb6j699e3ho(i, j, css_id) {
-          var table = document.getElementById("tinytable_oqp1sv4urrb6j699e3ho");
+      function styleCell_7jwsre721rmu8eizs78y(i, j, css_id) {
+          var table = document.getElementById("tinytable_7jwsre721rmu8eizs78y");
           var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
           if (cell) {
               console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
@@ -2911,7 +3105,7 @@ Table&nbsp;6
           }
       }
       function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_oqp1sv4urrb6j699e3ho');
+        var table = document.getElementById('tinytable_7jwsre721rmu8eizs78y');
         var newRow = table.insertRow(i);
         var newCell = newRow.insertCell(0);
         newCell.setAttribute("colspan", colspan);
@@ -2919,8 +3113,8 @@ Table&nbsp;6
         // this may be unsafe, but innerText does not interpret <br>
         newCell.innerHTML = content;
       }
-      function spanCell_oqp1sv4urrb6j699e3ho(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_oqp1sv4urrb6j699e3ho");
+      function spanCell_7jwsre721rmu8eizs78y(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_7jwsre721rmu8eizs78y");
         const targetRow = table.rows[i];
         const targetCell = targetRow.cells[j];
         for (let r = 0; r < rowspan; r++) {
@@ -2950,14 +3144,14 @@ Table&nbsp;6
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: 3, j: 0 }, { i: 3, j: 1 }, { i: 3, j: 2 }, { i: 3, j: 3 }, { i: 3, j: 4 }, { i: 3, j: 5 }, { i: 3, j: 6 }, { i: 3, j: 7 }, { i: 3, j: 8 }, { i: 3, j: 9 }, { i: 3, j: 10 },  ], css_id: 'tinytable_css_8x8jii7x3ouxhyk9e568',}, 
-          { positions: [ { i: 0, j: 0 }, { i: 0, j: 1 }, { i: 0, j: 2 }, { i: 0, j: 3 }, { i: 0, j: 4 }, { i: 0, j: 5 }, { i: 0, j: 6 }, { i: 0, j: 7 }, { i: 0, j: 8 }, { i: 0, j: 9 }, { i: 0, j: 10 },  ], css_id: 'tinytable_css_g6t30uiv8z0002kmozol',}, 
+          { positions: [ { i: 3, j: 0 }, { i: 3, j: 1 }, { i: 3, j: 2 }, { i: 3, j: 3 }, { i: 3, j: 4 }, { i: 3, j: 5 }, { i: 3, j: 6 }, { i: 3, j: 7 }, { i: 3, j: 8 }, { i: 3, j: 9 }, { i: 3, j: 10 },  ], css_id: 'tinytable_css_de7piam2iup8gqssx0w1',}, 
+          { positions: [ { i: 0, j: 0 }, { i: 0, j: 1 }, { i: 0, j: 2 }, { i: 0, j: 3 }, { i: 0, j: 4 }, { i: 0, j: 5 }, { i: 0, j: 6 }, { i: 0, j: 7 }, { i: 0, j: 8 }, { i: 0, j: 9 }, { i: 0, j: 10 },  ], css_id: 'tinytable_css_pdustb1elo0n9wzc4g6v',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  styleCell_oqp1sv4urrb6j699e3ho(cell.i, cell.j, group.css_id);
+                  styleCell_7jwsre721rmu8eizs78y(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -2965,11 +3159,11 @@ Table&nbsp;6
 
     <style>
       /* tinytable css entries after */
-      .table td.tinytable_css_8x8jii7x3ouxhyk9e568, .table th.tinytable_css_8x8jii7x3ouxhyk9e568 { border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_g6t30uiv8z0002kmozol, .table th.tinytable_css_g6t30uiv8z0002kmozol { border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_de7piam2iup8gqssx0w1, .table th.tinytable_css_de7piam2iup8gqssx0w1 { border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_pdustb1elo0n9wzc4g6v, .table th.tinytable_css_pdustb1elo0n9wzc4g6v { border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_oqp1sv4urrb6j699e3ho" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="table table-borderless" id="tinytable_7jwsre721rmu8eizs78y" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         <thead>
         
               <tr>
@@ -3037,13 +3231,13 @@ Table&nbsp;6
 </div>
 </div>
 </div>
-<section id="model-parameters-2" class="level4">
-<h4 class="anchored" data-anchor-id="model-parameters-2">Model Parameters</h4>
-<section id="mu-1" class="level5">
-<h5 class="anchored" data-anchor-id="mu-1"><span class="math inline">\(\mu\)</span></h5>
+<section id="model-parameters-2" class="level4" data-number="1.2.0.1">
+<h4 data-number="1.2.0.1" class="anchored" data-anchor-id="model-parameters-2"><span class="header-section-number">1.2.0.1</span> Model Parameters</h4>
+<section id="mu-1" class="level5" data-number="1.2.0.1.1">
+<h5 data-number="1.2.0.1.1" class="anchored" data-anchor-id="mu-1"><span class="header-section-number">1.2.0.1.1</span> <span class="math inline">\(\mu\)</span></h5>
 <p>If we take a look at the summary output in <a href="#tbl-ordbeta-glmm" class="quarto-xref">Table&nbsp;6</a>, we can interpret the values similar to a beta regression, where the conditional effects are on the log odds scale. Here the <code>Fluency</code> parameter is not statistically significant, <em>p</em> = .05.</p>
-<section id="phi-1" class="level6">
-<h6 class="anchored" data-anchor-id="phi-1"><span class="math inline">\(\phi\)</span></h6>
+<section id="phi-1" class="level6" data-number="1.2.0.1.1.1">
+<h6 data-number="1.2.0.1.1.1" class="anchored" data-anchor-id="phi-1"><span class="header-section-number">1.2.0.1.1.1</span> <span class="math inline">\(\phi\)</span></h6>
 <p><a href="#tbl-ordbeta-glmm" class="quarto-xref">Table&nbsp;6</a> also includes an overall <span class="math inline">\(\phi\)</span> component. Similar to our other models we can model the variability as a function of fluency.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-8-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-1" role="tab" aria-controls="tabset-8-1" aria-selected="true" href="">Result</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-8-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-2" role="tab" aria-controls="tabset-8-2" aria-selected="false" href="">Interactive</a></li></ul>
@@ -3075,8 +3269,8 @@ Table&nbsp;7
 
     <script>
 
-      function styleCell_fvc4wwmzh56fo2hccaby(i, j, css_id) {
-          var table = document.getElementById("tinytable_fvc4wwmzh56fo2hccaby");
+      function styleCell_yma7simhj6qvedpdg75c(i, j, css_id) {
+          var table = document.getElementById("tinytable_yma7simhj6qvedpdg75c");
           var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
           if (cell) {
               console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
@@ -3086,7 +3280,7 @@ Table&nbsp;7
           }
       }
       function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_fvc4wwmzh56fo2hccaby');
+        var table = document.getElementById('tinytable_yma7simhj6qvedpdg75c');
         var newRow = table.insertRow(i);
         var newCell = newRow.insertCell(0);
         newCell.setAttribute("colspan", colspan);
@@ -3094,8 +3288,8 @@ Table&nbsp;7
         // this may be unsafe, but innerText does not interpret <br>
         newCell.innerHTML = content;
       }
-      function spanCell_fvc4wwmzh56fo2hccaby(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_fvc4wwmzh56fo2hccaby");
+      function spanCell_yma7simhj6qvedpdg75c(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_yma7simhj6qvedpdg75c");
         const targetRow = table.rows[i];
         const targetCell = targetRow.cells[j];
         for (let r = 0; r < rowspan; r++) {
@@ -3125,14 +3319,14 @@ Table&nbsp;7
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: 4, j: 0 }, { i: 4, j: 1 }, { i: 4, j: 2 }, { i: 4, j: 3 }, { i: 4, j: 4 }, { i: 4, j: 5 }, { i: 4, j: 6 }, { i: 4, j: 7 }, { i: 4, j: 8 }, { i: 4, j: 9 }, { i: 4, j: 10 },  ], css_id: 'tinytable_css_dn8jp7o60pyvgfns9eoc',}, 
-          { positions: [ { i: 0, j: 0 }, { i: 0, j: 1 }, { i: 0, j: 2 }, { i: 0, j: 3 }, { i: 0, j: 4 }, { i: 0, j: 5 }, { i: 0, j: 6 }, { i: 0, j: 7 }, { i: 0, j: 8 }, { i: 0, j: 9 }, { i: 0, j: 10 },  ], css_id: 'tinytable_css_lp5z5ykbg752j193oxs4',}, 
+          { positions: [ { i: 4, j: 0 }, { i: 4, j: 1 }, { i: 4, j: 2 }, { i: 4, j: 3 }, { i: 4, j: 4 }, { i: 4, j: 5 }, { i: 4, j: 6 }, { i: 4, j: 7 }, { i: 4, j: 8 }, { i: 4, j: 9 }, { i: 4, j: 10 },  ], css_id: 'tinytable_css_6984hr55x741ph10tpxl',}, 
+          { positions: [ { i: 0, j: 0 }, { i: 0, j: 1 }, { i: 0, j: 2 }, { i: 0, j: 3 }, { i: 0, j: 4 }, { i: 0, j: 5 }, { i: 0, j: 6 }, { i: 0, j: 7 }, { i: 0, j: 8 }, { i: 0, j: 9 }, { i: 0, j: 10 },  ], css_id: 'tinytable_css_xbn4tgc9ekke8tsbh5bp',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  styleCell_fvc4wwmzh56fo2hccaby(cell.i, cell.j, group.css_id);
+                  styleCell_yma7simhj6qvedpdg75c(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -3140,11 +3334,11 @@ Table&nbsp;7
 
     <style>
       /* tinytable css entries after */
-      .table td.tinytable_css_dn8jp7o60pyvgfns9eoc, .table th.tinytable_css_dn8jp7o60pyvgfns9eoc { border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_lp5z5ykbg752j193oxs4, .table th.tinytable_css_lp5z5ykbg752j193oxs4 { border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_6984hr55x741ph10tpxl, .table th.tinytable_css_6984hr55x741ph10tpxl { border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_xbn4tgc9ekke8tsbh5bp, .table th.tinytable_css_xbn4tgc9ekke8tsbh5bp { border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_fvc4wwmzh56fo2hccaby" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="table table-borderless" id="tinytable_yma7simhj6qvedpdg75c" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         <thead>
         
               <tr>
@@ -3229,29 +3423,97 @@ Table&nbsp;7
 </section>
 </section>
 </section>
-<section id="predicted-probabilities-and-marginal-effects-1" class="level4">
-<h4 class="anchored" data-anchor-id="predicted-probabilities-and-marginal-effects-1">Predicted probabilities and marginal effects</h4>
+<section id="predicted-probabilities-and-marginal-effects-1" class="level4" data-number="1.2.0.2">
+<h4 data-number="1.2.0.2" class="anchored" data-anchor-id="predicted-probabilities-and-marginal-effects-1"><span class="header-section-number">1.2.0.2</span> Predicted probabilities and marginal effects</h4>
 <p>Remember these values are on the logit scale so we can take the inverse and get predicted probabilities like we have done before using the <code>marginaleffects</code> package. These values are shown in <strong>?@tbl-ordbeta-pred</strong>.</p>
 <p>We can get the risk difference as well. These values are in <strong>?@tbl-ordbeta-risk</strong>.</p>
 </section>
-<section id="phi-2" class="level3">
-<h3 class="anchored" data-anchor-id="phi-2"><span class="math inline">\(\phi\)</span></h3>
+<section id="phi-2" class="level3" data-number="1.2.1">
+<h3 data-number="1.2.1" class="anchored" data-anchor-id="phi-2"><span class="header-section-number">1.2.1</span> <span class="math inline">\(\phi\)</span></h3>
 <p><strong>?@tbl-ordbeta-summ</strong> also includes an overall phi component. Similar to our other models we can model the variability as a function of fluency. Let’s try this in our model: Note the addition of the <code>phi_reg</code> argument. This argument allows us to include a model that explicitly models the dispersion parameter. Because I am modeling <span class="math inline">\(\phi\)</span> as a function of fluency, I set the argument to <code>both</code></p>
 <p>In <strong>?@tbl-phi-ordbeta</strong>, <code>b_phi_Fluency_dummy1</code> is close enough to 0 relative to its uncertainty, we can say that in this case there likely aren’t major differences in variance between the fluent disfluent conditions</p>
 </section>
 </section>
-<section id="xbx-regression" class="level2">
-<h2 class="anchored" data-anchor-id="xbx-regression">XBX Regression</h2>
+<section id="xbx-regression" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="xbx-regression"><span class="header-section-number">1.3</span> XBX Regression</h2>
 <p>A new type of regression known as XBX regression can be used for data that contain 0s and 1s.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>la_xbx <span class="ot">&lt;-</span> <span class="fu">betareg</span>(Accuracy <span class="sc">~</span> Fluency <span class="sc">|</span> Fluency, <span class="at">data =</span> fluency_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 </section>
-<section id="references" class="level1">
-<h1>References</h1>
+<section id="references" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> References</h1>
 <!-- References will auto-populate in the refs div below -->
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<section id="sesssion-info" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="sesssion-info"><span class="header-section-number">2.1</span> Sesssion Info</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>R version 4.5.1 (2025-06-13)
+Platform: aarch64-apple-darwin20
+Running under: macOS Sequoia 15.6.1
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.1
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: America/New_York
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] marginaleffects_0.30.0 tinytable_0.9.0        scales_1.4.0          
+ [4] gghalves_0.1.4         see_0.11.0             report_0.6.1          
+ [7] parameters_0.28.2      performance_0.15.2     modelbased_0.11.2     
+[10] insight_1.4.2          effectsize_1.0.1       datawizard_1.2.0      
+[13] correlation_0.8.8      bayestestR_0.17.0      easystats_0.7.4       
+[16] betareg_3.2-4          glmmTMB_1.1.11         lubridate_1.9.4       
+[19] forcats_1.0.1          stringr_1.5.2          dplyr_1.1.4           
+[22] purrr_1.1.0            readr_2.1.5            tidyr_1.3.1           
+[25] tibble_3.3.0           ggplot2_4.0.0          tidyverse_2.0.0       
+
+loaded via a namespace (and not attached):
+ [1] tidyselect_1.2.1    farver_2.1.2        S7_0.2.0           
+ [4] fastmap_1.2.0       digest_0.6.37       estimability_1.5.1 
+ [7] timechange_0.3.0    lifecycle_1.0.4     statmod_1.5.1      
+[10] magrittr_2.0.4      compiler_4.5.1      rlang_1.1.6        
+[13] tools_4.5.1         yaml_2.3.10         data.table_1.17.8  
+[16] knitr_1.50          labeling_0.4.3      htmlwidgets_1.6.4  
+[19] curl_7.0.0          bit_4.6.0           RColorBrewer_1.1-3 
+[22] withr_3.0.2         numDeriv_2016.8-1.1 nnet_7.3-20        
+[25] grid_4.5.1          stats4_4.5.1        fansi_1.0.6        
+[28] xtable_1.8-4        emmeans_1.11.1      MASS_7.3-65        
+[31] cli_3.6.5           mvtnorm_1.3-3       crayon_1.5.3       
+[34] rmarkdown_2.30      ragg_1.5.0          reformulas_0.4.2   
+[37] generics_0.1.4      rstudioapi_0.17.1   tzdb_0.5.0         
+[40] minqa_1.2.8         modeltools_0.2-24   splines_4.5.1      
+[43] parallel_4.5.1      vctrs_0.6.5         boot_1.3-31        
+[46] Matrix_1.7-3        sandwich_3.1-1      jsonlite_2.0.0     
+[49] litedown_0.7        hms_1.1.4           bit64_4.6.0-1      
+[52] Formula_1.2-5       systemfonts_1.3.1   glue_1.8.0         
+[55] nloptr_2.2.1        stringi_1.8.7       gtable_0.3.6       
+[58] lmtest_0.9-40       lme4_1.1-37         pillar_1.11.1      
+[61] htmltools_0.5.8.1   R6_2.6.1            TMB_1.9.17         
+[64] textshaping_1.0.4   Rdpack_2.6.4        vroom_1.6.6        
+[67] evaluate_1.0.5      lattice_0.22-7      backports_1.5.0    
+[70] rbibutils_2.3       Rcpp_1.1.0          flexmix_2.3-20     
+[73] checkmate_2.3.2     coda_0.19-4.1       nlme_3.1-168       
+[76] mgcv_1.9-3          xfun_0.54           zoo_1.8-14         
+[79] pkgconfig_2.0.3    </code></pre>
+</div>
+</div>
+
+</section>
+</section>
+
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-glmmTMB-4" class="csl-entry" role="listitem">
 Brooks, Mollie E., Kasper Kristensen, Koen J. van, Arni Magnusson, Casper W. Berg, Anders Nielsen, Hans J. Skaug, Martin Maechler, and Benjamin M. Bolker. 2017. <span>“<span></span>glmmTMB<span></span> Balances Speed and Flexibility Among Packages for Zero-Inflated Generalized Linear Mixed Modeling”</span> 9. <a href="https://doi.org/10.32614/RJ-2017-066">https://doi.org/10.32614/RJ-2017-066</a>.
 </div>
@@ -3273,11 +3535,7 @@ Wilford, Miko M., Nayantara Kurpad, Melanie Platt, and Yana Weinstein-Jones. 202
 <div id="ref-witherby2022" class="csl-entry" role="listitem">
 Witherby, Amber E., and Shana K. Carpenter. 2022. <span>“The Impact of Lecture Fluency and Technology Fluency on Students<span>’</span> Online Learning and Evaluations of Instructors.”</span> <em>Journal of Applied Research in Memory and Cognition</em> 11 (4): 500–509. <a href="https://doi.org/10.1037/mac0000003">https://doi.org/10.1037/mac0000003</a>.
 </div>
-</div>
-</section>
-
-
-<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+</div></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
 <ol>
 <li id="fn1"><p>See an example of the fluent video here: <a href="https://osf.io/hwzuk" class="uri">https://osf.io/hwzuk</a>. See an example of the disfluent video here: <a href="https://osf.io/ra7be" class="uri">https://osf.io/ra7be</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
@@ -3286,6 +3544,19 @@ Witherby, Amber E., and Shana K. Carpenter. 2022. <span>“The Impact of Lecture
 <!-- /main column -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
     const icon = "";
     const anchorJS = new window.AnchorJS();
     anchorJS.options = {

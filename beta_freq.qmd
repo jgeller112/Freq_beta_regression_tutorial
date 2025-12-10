@@ -24,8 +24,18 @@ language:
   title-block-correspondence-note: "Correspondence concerning this article should be addressed to"
   title-block-role-introduction: "Author roles were classified using the Contributor Role Taxonomy (CRediT; https://credit.niso.org/) as follows:"
 bibliography: references.bib
+
 format:
-    html: default
+  html:
+    theme:
+      light: cosmo
+      dark: darkly
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    highlight-style: atom-one
+
+
 execute:
   warning: false
   message: false
@@ -59,7 +69,8 @@ In @wilford2020 (Expt 1a), they presented participants with two short videos hig
 
 As a first step, we will load the necessary packages along with the data we will be using. While we load all the necessary packages here, we also highlight when packages are needed as code chunks are run.
 
-# Packages Meeded
+# Packages Needed
+
 ::: to-webr
 ```{r}
 #| label: setup 
@@ -129,8 +140,6 @@ fluency_data |>
 :::
 @tbl-01s shows we have 9 rows with accuracy of 0, and 1 row with an accuracy of exactly 1. To run a beta regression we will remove these values.
 
-:::
-
 ```{r}
 #| echo: true
 #|
@@ -141,7 +150,8 @@ data_beta <- fluency_data |>
 ```
 :::
 
-Let's fit the model again with our little .01 and .99 hack. The model object `data_beta` has our accuracy values modified.
+Let's fit the model again. The model object `data_beta` has our accuracy values modified.
+
 ::: to-webr
 
 ```{r}
@@ -156,7 +166,6 @@ beta_model <- glmmTMB(
 ) # fits a constant for mu and dispersion
 ```
 :::
-
 
 No errors this time!
 
@@ -594,5 +603,9 @@ la_xbx <- betareg(Accuracy ~ Fluency | Fluency, data = fluency_data)
 
 <!-- References will auto-populate in the refs div below -->
 
-::: {#refs}
-:::
+
+## Sesssion Info
+
+```{r}
+sessionInfo()
+```
